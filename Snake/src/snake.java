@@ -1,11 +1,16 @@
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
 import org.eclipse.swt.widgets.Button;
+
+import org.eclipse.swt.widgets.Text;
+
 import org.eclipse.swt.SWT;
 
 public class snake {
 
 	protected Shell shell;
+	private Text text;
 
 	/**
 	 * Launch the application.
@@ -43,9 +48,14 @@ public class snake {
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
 		
+
 		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.setBounds(163, 106, 75, 25);
 		btnNewButton.setText("New Button");
+
+		text = new Text(shell, SWT.BORDER);
+		text.setBounds(79, 35, 76, 21);
+
 
 	}
 }
