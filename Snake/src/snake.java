@@ -2,15 +2,16 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.SWT;
 
-import org.eclipse.swt.widgimport org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
 
 public class snake {
 
-	protected Shell shell;
+	protected Shell shlSnake;
 	private Text text;
 
 	/**
@@ -32,9 +33,9 @@ public class snake {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
+		shlSnake.open();
+		shlSnake.layout();
+		while (!shlSnake.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -45,28 +46,28 @@ public class snake {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(536, 456);
-		shell.setText("SWT Application");
+		shlSnake = new Shell();
+		shlSnake.setSize(536, 456);
+		shlSnake.setText("SNAKE");
 		
-		Canvas canvas = new Canvas(shell, SWT.NONE);
+		Canvas canvas = new Canvas(shlSnake, SWT.NONE);
 		canvas.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		canvas.setBounds(10, 10, 500, 350);
 		
-		text = new Text(shell, SWT.BORDER);
-		text.setBounds(10, 383, 131, 27);
+		text = new Text(shlSnake, SWT.BORDER);
+		text.setBounds(10, 380, 210, 30);
 		
-		Button btnNewButton = new Button(shell, SWT.NONE);
-		btnNewButton.setBounds(158, 383, 170, 27);
+		Button btnNewButton = new Button(shlSnake, SWT.NONE);
+		btnNewButton.setBounds(226, 380, 170, 30);
 		btnNewButton.setText("START");
 		
-		Label lblNewLabel = new Label(shell, SWT.NONE);
-		lblNewLabel.setBounds(340, 383, 170, 27);
+		Label lblNewLabel = new Label(shlSnake, SWT.NONE);
+		lblNewLabel.setBounds(402, 383, 108, 27);
 		lblNewLabel.setText("SCORE");
-nds(163, 106, 75, 25);
+		lblNewLabel.setBounds(163, 106, 75, 25);
 		btnNewButton.setText("New Button");
 
-		text = new Text(shell, SWT.BORDER);
+		text = new Text(shlSnake, SWT.BORDER);
 		text.setBounds(79, 35, 76, 21);
 
 
