@@ -67,7 +67,7 @@ public class snake {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				GC gc= new GC(canvas);
-				gc.drawOval(BASECANVAS/2, ALTCANVAS/2, c.getRaggio(), c.getRaggio());
+				gc.drawOval(BASECANVAS/2, ALTCANVAS/2,c.getRaggio() ,c.getRaggio() );
 				
 				
 			}

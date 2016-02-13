@@ -8,7 +8,7 @@ public class Cerchio {
 
 	public Cerchio() {
 		this.centro = new Punto(0, 0);
-		this.raggio = 0;
+		this.raggio = 10;
 	}
 
 	public Cerchio(Punto x, int r) {
