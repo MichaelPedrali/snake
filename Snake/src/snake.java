@@ -60,15 +60,11 @@ public class snake {
 		Button btnNewButton = new Button(shlSnake, SWT.NONE);
 		btnNewButton.setBounds(226, 380, 170, 30);
 		btnNewButton.setText("START");
-		
-		Label lblNewLabel = new Label(shlSnake, SWT.NONE);
-		lblNewLabel.setBounds(402, 383, 108, 27);
-		lblNewLabel.setText("SCORE");
-		lblNewLabel.setBounds(163, 106, 75, 25);
 		btnNewButton.setText("New Button");
-
-		text = new Text(shlSnake, SWT.BORDER);
-		text.setBounds(79, 35, 76, 21);
+		
+		Label lblScore = new Label(shlSnake, SWT.NONE);
+		lblScore.setBounds(415, 380, 95, 30);
+		lblScore.setText("SCORE");
 
 
 	}
