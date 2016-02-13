@@ -3,9 +3,10 @@ import org.eclipse.swt.widgets.Shell;
 
 import org.eclipse.swt.widgets.Button;
 
+import org.eclipse.swt.widgimport org.eclipse.swt.widgets.Canvas;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Text;
-
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Label;
 
 public class snake {
 
@@ -45,12 +46,24 @@ public class snake {
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(450, 300);
+		shell.setSize(536, 456);
 		shell.setText("SWT Application");
 		
-
+		Canvas canvas = new Canvas(shell, SWT.NONE);
+		canvas.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		canvas.setBounds(10, 10, 500, 350);
+		
+		text = new Text(shell, SWT.BORDER);
+		text.setBounds(10, 383, 131, 27);
+		
 		Button btnNewButton = new Button(shell, SWT.NONE);
-		btnNewButton.setBounds(163, 106, 75, 25);
+		btnNewButton.setBounds(158, 383, 170, 27);
+		btnNewButton.setText("START");
+		
+		Label lblNewLabel = new Label(shell, SWT.NONE);
+		lblNewLabel.setBounds(340, 383, 170, 27);
+		lblNewLabel.setText("SCORE");
+nds(163, 106, 75, 25);
 		btnNewButton.setText("New Button");
 
 		text = new Text(shell, SWT.BORDER);
