@@ -1,5 +1,7 @@
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.SWT;
 
 public class snake {
 
@@ -40,7 +42,10 @@ public class snake {
 		shell = new Shell();
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
+		
+		Button btnNewButton = new Button(shell, SWT.NONE);
+		btnNewButton.setBounds(163, 106, 75, 25);
+		btnNewButton.setText("New Button");
 
 	}
-
 }
