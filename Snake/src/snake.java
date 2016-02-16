@@ -19,6 +19,8 @@ public class snake {
 	private int BASECANVAS=500;
 	private int ALTCANVAS=350;
     Cerchio c = new Cerchio();
+    Punto centro = new Punto(BASECANVAS/2,ALTCANVAS/2);
+    char tasto;
 	/**
 	 * Launch the application.
 	 * @param args
@@ -67,7 +69,33 @@ public class snake {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				GC gc= new GC(canvas);
-				gc.drawOval(BASECANVAS/2, ALTCANVAS/2,c.getRaggio() ,c.getRaggio() );
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.drawOval(centro.getX(), centro.getY(),c.getRaggio() ,c.getRaggio() );
+				for(int i = 0; i < 10000; i++){
+					c.sposta(10, 0);
+					gc.drawOval((centro.getX())+i, (centro.getY())+i,c.getRaggio() ,c.getRaggio() );
+				
+			    if (tasto==224){
+				    ;
+					if(tasto==72){
+						//freccia in alto
+						centro.setY((centro.getY()-1)); //posY--;
+					}
+					if(tasto==80){
+						//freccia in basso
+						centro.setY((centro.getY()+1)); //posY--;
+					}
+					if(tasto==77){
+						//freccia a destra
+						centro.setX((centro.getX()+1)); //posY--;
+					}
+					if(tasto==75){
+						//freccia a sinistra
+						centro.setX((centro.getX()-1));
+					}
+				}
+				}
 				
 				
 			}
@@ -76,7 +104,7 @@ public class snake {
 		btnNewButton.setText("START");
 		
 		Label lblScore = new Label(shlSnake, SWT.NONE);
-		lblScore.setBounds(415, 380, 95, 30);
+		lblScore.setBounds(402, 383, 108, 25);
 		lblScore.setText("SCORE");
 
 
