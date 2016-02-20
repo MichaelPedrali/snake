@@ -26,7 +26,7 @@ public class Cerchio {
 	}
 
 	public void setCentro(Punto centro) {
-		this.centro = centro;
+		this.centro = new Punto(centro);
 	}
 
 	public int getRaggio() {
@@ -41,6 +41,14 @@ public class Cerchio {
 		centro.setX(centro.getX() + deltax);
 		centro.setY(centro.getY() + deltay);
 
+	}
+	
+	public boolean equals(Cerchio c) {
+		if (centro.equals(c.getCentro())){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }

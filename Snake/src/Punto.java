@@ -60,6 +60,24 @@ public class Punto {
 
 	// equals
 	public boolean equals(Punto p) {
-		return (x == p.x && y == p.y);
+		boolean ris=false;
+		for(int i=0; i<5; i++){
+		if (x == p.getX() && y == p.getY()){
+			return true;
+		}if (x+i == p.getX() && y == p.getY()){
+			return true;
+		}if (x == p.getX() && y+i == p.getY()){
+			return true;
+		}if (x-i == p.getX() && y == p.getY()){
+			return true;
+		}if (x == p.getX() && y-i == p.getY()){
+			return true;
+		}if (x+i == p.getX() && y+i == p.getY()){
+			return true;
+		}if (x-i == p.getX() && y-i == p.getY()){
+			return true;
+		}
+		}
+		return ris;
 	}
 }
