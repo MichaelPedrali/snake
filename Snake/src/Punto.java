@@ -4,9 +4,9 @@ public class Punto {
 	private int x;
 	private int y;
 	public static int xmin = 1;
-	public static int xmax = 80;
+	public static int xmax = 500;
 	public static int ymin = 1;
-	public static int ymax = 25;
+	public static int ymax = 350;
 
 	// costruttori
 

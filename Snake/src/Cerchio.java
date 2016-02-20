@@ -3,12 +3,17 @@ public class Cerchio {
 	private Punto centro;
 	private int raggio;
 
-	public static int BASECANVAS = 250;
-	public static int ALTEZZACANVAS = 250;
+	private int BASECANVAS=500;
+	private int ALTCANVAS=350;
 
 	public Cerchio() {
-		this.centro = new Punto(0, 0);
+		this.centro = new Punto(BASECANVAS/2, ALTCANVAS/2);
 		this.raggio = 10;
+	}
+
+	public Cerchio(Cerchio c) {
+		setCentro(c.getCentro());
+		setRaggio(c.getRaggio());
 	}
 
 	public Cerchio(Punto x, int r) {

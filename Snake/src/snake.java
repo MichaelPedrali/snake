@@ -19,7 +19,7 @@ public class snake {
 	private int BASECANVAS=500;
 	private int ALTCANVAS=350;
     Cerchio c = new Cerchio();
-    Punto centro = new Punto(BASECANVAS/2,ALTCANVAS/2);
+    ElencoCerchi ec = new ElencoCerchi();
     char tasto;
 	/**
 	 * Launch the application.
@@ -54,7 +54,7 @@ public class snake {
 	 */
 	protected void createContents() {
 		shlSnake = new Shell();
-		shlSnake.setSize(536, 450);
+		shlSnake.setSize(536, 529);
 		shlSnake.setText("SNAKE");
 		
 		Canvas canvas = new Canvas(shlSnake, SWT.NONE);
@@ -71,11 +71,9 @@ public class snake {
 				GC gc= new GC(canvas);
 				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
 				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.drawOval(centro.getX(), centro.getY(),c.getRaggio() ,c.getRaggio() );
-				for(int i = 0; i < 10000; i++){
-					c.sposta(10, 0);
-					gc.drawOval((centro.getX())+i, (centro.getY())+i,c.getRaggio() ,c.getRaggio() );
-				
+				gc.drawOval(c.getCentro().getX(), c.getCentro().getY(),c.getRaggio() ,c.getRaggio() );
+					//gc.drawOval((centro.getX())+i, (centro.getY())+i,c.getRaggio() ,c.getRaggio() );
+				/*
 			    if (tasto==224){
 				    ;
 					if(tasto==72){
@@ -94,8 +92,8 @@ public class snake {
 						//freccia a sinistra
 						centro.setX((centro.getX()-1));
 					}
-				}
-				}
+				}*/
+				
 				
 				
 			}
@@ -104,8 +102,86 @@ public class snake {
 		btnNewButton.setText("START");
 		
 		Label lblScore = new Label(shlSnake, SWT.NONE);
-		lblScore.setBounds(402, 383, 108, 25);
-		lblScore.setText("SCORE");
+		lblScore.setBounds(413, 383, 49, 25);
+		lblScore.setText("SCORE:");
+		
+		Label label = new Label(shlSnake, SWT.NONE);
+		label.setBounds(457, 383, 45, 22);
+		label.setText("0");
+		
+		Button btnNewButton_1 = new Button(shlSnake, SWT.NONE);
+		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				GC gc= new GC(canvas);
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+				gc.drawOval(c.getCentro().getX(),c.getCentro().getY(), c.getRaggio(), c.getRaggio());
+				c.sposta(0, -10);
+				ec.aggiungi(c);
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.drawOval(c.getCentro().getX(),c.getCentro().getY(), c.getRaggio(), c.getRaggio());
+				
+			}
+		});
+		btnNewButton_1.setBounds(203, 416, 75, 25);
+		btnNewButton_1.setText("^");
+		
+		Button btnNewButton_2 = new Button(shlSnake, SWT.NONE);
+		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				GC gc= new GC(canvas);
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+				gc.drawOval(c.getCentro().getX(),c.getCentro().getY(), c.getRaggio(), c.getRaggio());
+				c.sposta(0, +10);
+				ec.aggiungi(c);
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.drawOval(c.getCentro().getX(),c.getCentro().getY(), c.getRaggio(), c.getRaggio());
+			}
+		});
+		btnNewButton_2.setBounds(203, 456, 75, 25);
+		btnNewButton_2.setText("v");
+		
+		Button btnNewButton_3 = new Button(shlSnake, SWT.NONE);
+		btnNewButton_3.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				GC gc= new GC(canvas);
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+				gc.drawOval(c.getCentro().getX(),c.getCentro().getY(), c.getRaggio(), c.getRaggio());
+				c.sposta(-10, 0);
+				ec.aggiungi(c);
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.drawOval(c.getCentro().getX(),c.getCentro().getY(), c.getRaggio(), c.getRaggio());
+			}
+		});
+		btnNewButton_3.setBounds(111, 435, 75, 25);
+		btnNewButton_3.setText("<");
+		
+		Button btnNewButton_4 = new Button(shlSnake, SWT.NONE);
+		btnNewButton_4.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				GC gc= new GC(canvas);
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+				gc.drawOval(c.getCentro().getX(),c.getCentro().getY(), c.getRaggio(), c.getRaggio());
+				c.sposta(+10, 0);
+				ec.aggiungi(c);
+				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				gc.drawOval(c.getCentro().getX(),c.getCentro().getY(), c.getRaggio(), c.getRaggio());
+			}
+		});
+		btnNewButton_4.setBounds(294, 435, 75, 25);
+		btnNewButton_4.setText(">");
 
 
 	}
