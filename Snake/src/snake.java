@@ -19,6 +19,7 @@ public class snake {
 
 	protected Shell shlSnake;
 	private Text text;
+	Canvas canvas;
 	private int BASECANVAS = 500;
 	private int ALTCANVAS = 350;
 	Cerchio serpente = new Cerchio();
@@ -55,6 +56,30 @@ public class snake {
 			}
 		}
 	}
+	
+	public void elimina(){
+		GC gc = new GC(canvas);
+		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+	}
+	
+	public void mele(){
+		GC gc = new GC(canvas);
+		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		//gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+		gc.drawOval(ran.nextInt(500),ran.nextInt(350), mela.getRaggio(), mela.getRaggio());
+	}
+	
+	public void serpente(){
+		GC gc = new GC(canvas);
+		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+	}
 
 	/**
 	 * Create contents of the window.
@@ -64,7 +89,7 @@ public class snake {
 		shlSnake.setSize(536, 529);
 		shlSnake.setText("SNAKE");
 
-		Canvas canvas = new Canvas(shlSnake, SWT.NONE);
+	    canvas = new Canvas(shlSnake, SWT.NONE);
 		canvas.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		canvas.setBounds(10, 10, 500, 350);
 
@@ -75,18 +100,9 @@ public class snake {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//Cerchio mela = new Cerchio(new Punto(), 5);
 				GC gc = new GC(canvas);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-				//gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(ran.nextInt(500),ran.nextInt(350), mela.getRaggio(), mela.getRaggio());
-
+                serpente();
+				mele();
 			}
 		});
 		btnNewButton.setBounds(226, 380, 170, 30);
@@ -105,22 +121,12 @@ public class snake {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				GC gc = new GC(canvas);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+                elimina();
 				serpente.sposta(0, -10);
 				ec.aggiungi(serpente);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				
+				serpente();
 				if(serpente.equals(mela)){
-					gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					//gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-					gc.drawOval(ran.nextInt(500),ran.nextInt(350), mela.getRaggio(), mela.getRaggio());
+	            mele();
 				}
 			}
 		});
@@ -132,22 +138,12 @@ public class snake {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				GC gc = new GC(canvas);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+                elimina();
 				serpente.sposta(0, +10);
 				ec.aggiungi(serpente);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				
+                serpente();
 				if(serpente.equals(mela)){
-					gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					//gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-					gc.drawOval(ran.nextInt(500),ran.nextInt(350), mela.getRaggio(), mela.getRaggio());
+                mele();
 				}
 			}
 		});
@@ -160,22 +156,12 @@ public class snake {
 			public void widgetSelected(SelectionEvent e) {
 
 				GC gc = new GC(canvas);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+                elimina();
 				serpente.sposta(-10, 0);
 				ec.aggiungi(serpente);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				
+                serpente();
 				if(serpente.equals(mela)){
-					gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					//gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-					gc.drawOval(ran.nextInt(500),ran.nextInt(350), mela.getRaggio(), mela.getRaggio());
+                mele();
 				}
 			}
 		});
@@ -187,22 +173,12 @@ public class snake {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				GC gc = new GC(canvas);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+                elimina();
 				serpente.sposta(+10, 0);
 				ec.aggiungi(serpente);
-				gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-				
+                serpente();
 				if(serpente.equals(mela)){
-					gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					//gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-					gc.drawOval(ran.nextInt(500),ran.nextInt(350), mela.getRaggio(), mela.getRaggio());
+                mele();
 				}
 			}
 		});
