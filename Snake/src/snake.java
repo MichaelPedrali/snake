@@ -69,7 +69,7 @@ public class snake {
 		GC gc = new GC(canvas);
 		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		//gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+		gc.fillOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
 		gc.drawOval(ran.nextInt(500),ran.nextInt(350), mela.getRaggio(), mela.getRaggio());
 	}
 	
@@ -80,7 +80,37 @@ public class snake {
 		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
 		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
 	}
-
+    
+	public void collisione(){
+		boolean ris=false;
+		for(int i=0; i<5; i++){
+		if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}if (mela.getCentro().getX()+i == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
+		    ris = true;
+		    break;
+		}if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY()+i == serpente.getCentro().getY()){
+		    ris = true;
+		    break;
+		}if( mela.getCentro().getX()-i == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY()-1 == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}if (mela.getCentro().getX()+i == serpente.getCentro().getX() && mela.getCentro().getY()+i == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}if (mela.getCentro().getX()-i == serpente.getCentro().getX() && mela.getCentro().getY()-i == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}
+		}
+		if(ris == true){
+			mele();
+		}
+	}
 	/**
 	 * Create contents of the window.
 	 */
@@ -125,9 +155,7 @@ public class snake {
 				serpente.sposta(0, -10);
 				ec.aggiungi(serpente);
 				serpente();
-				if(serpente.equals(mela)){
-	            mele();
-				}
+                collisione();
 			}
 		});
 		btnNewButton_1.setBounds(203, 416, 75, 25);
@@ -142,9 +170,7 @@ public class snake {
 				serpente.sposta(0, +10);
 				ec.aggiungi(serpente);
                 serpente();
-				if(serpente.equals(mela)){
-                mele();
-				}
+                collisione();
 			}
 		});
 		btnNewButton_2.setBounds(203, 456, 75, 25);
@@ -160,9 +186,7 @@ public class snake {
 				serpente.sposta(-10, 0);
 				ec.aggiungi(serpente);
                 serpente();
-				if(serpente.equals(mela)){
-                mele();
-				}
+                collisione();
 			}
 		});
 		btnNewButton_3.setBounds(111, 435, 75, 25);
@@ -177,9 +201,8 @@ public class snake {
 				serpente.sposta(+10, 0);
 				ec.aggiungi(serpente);
                 serpente();
-				if(serpente.equals(mela)){
-                mele();
-				}
+                collisione();
+
 			}
 		});
 		btnNewButton_4.setBounds(294, 435, 75, 25);
