@@ -27,6 +27,7 @@ public class snake {
 	Cerchio mela = new Cerchio(new Punto(), 5);
 	ElencoCerchi ec = new ElencoCerchi();
 	char tasto;
+	
 
 	/**
 	 * Launch the application.
@@ -65,12 +66,30 @@ public class snake {
 		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
 	}
 	
+	public void eliminaMela(){
+		Cerchio mela = new Cerchio(new Punto(), 5);
+		GC gc = new GC(canvas);
+		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		gc.fillOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
+		gc.drawOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
+	}
 	public void mele(){
+		
+		
+		int x= ran.nextInt(50)*10;
+		int y= ran.nextInt(35)*10;
+		//Cerchio mela = new Cerchio(new Punto(x,y), 5);
+		
+		
 		GC gc = new GC(canvas);
 		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		gc.fillOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
-		gc.drawOval(ran.nextInt(500),ran.nextInt(350), mela.getRaggio(), mela.getRaggio());
+		gc.fillOval(x,y, mela.getRaggio(), mela.getRaggio());
+		gc.drawOval(x,y, mela.getRaggio(), mela.getRaggio());
+		
+		System.out.println(x);
+		System.out.println(y);
 	}
 	
 	public void serpente(){
@@ -82,8 +101,11 @@ public class snake {
 	}
     
 	public void collisione(){
+		//Cerchio mela = new Cerchio(new Punto(), 5);
 		boolean ris=false;
 		for(int i=0; i<5; i++){
+			System.out.println(mela.getCentro().getX() +"-"+ serpente.getCentro().getX() +"-"+ mela.getCentro().getY() +"-"+serpente.getCentro().getY());
+			
 		if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
 			ris = true;
 			break;
@@ -108,6 +130,7 @@ public class snake {
 		}
 		}
 		if(ris == true){
+			eliminaMela();
 			mele();
 		}
 	}

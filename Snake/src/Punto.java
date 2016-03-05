@@ -11,8 +11,8 @@ public class Punto {
 	// costruttori
 
 	public Punto() {
-		x = xmin;
-		y = ymin;
+		x = xmax/2;
+		y = ymax/2;
 	}
 
 	public Punto(int x1, int y1) {
