@@ -3,6 +3,8 @@ import org.eclipse.swt.widgets.Shell;
 
 import org.eclipse.swt.widgets.Button;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import org.eclipse.swt.SWT;
@@ -24,10 +26,11 @@ public class snake {
 	private int ALTCANVAS = 350;
 	Cerchio serpente = new Cerchio();
 	Random ran = new Random();
-	Cerchio mela = new Cerchio(new Punto(), 5);
+	Cerchio mela;
 	ElencoCerchi ec = new ElencoCerchi();
 	char tasto;
-	
+	GC gc;
+	private char s = 'd';
 
 	/**
 	 * Launch the application.
@@ -55,11 +58,26 @@ public class snake {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
+		}}
+	
+		
+	public void setInterval(int time){
+		try {
+			Thread.sleep(time);
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		spostaSnake('d');
+		
 	}
 	
+	public void spostaSnake(char sp){
+		
+	}
 	public void elimina(){
-		GC gc = new GC(canvas);
+		gc = new GC(canvas);
 		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
@@ -67,8 +85,8 @@ public class snake {
 	}
 	
 	public void eliminaMela(){
-		Cerchio mela = new Cerchio(new Punto(), 5);
-		GC gc = new GC(canvas);
+		//Cerchio mela = new Cerchio(new Punto(), 5);
+		gc = new GC(canvas);
 		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		gc.fillOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
@@ -79,10 +97,10 @@ public class snake {
 		
 		int x= ran.nextInt(50)*10;
 		int y= ran.nextInt(35)*10;
-		//Cerchio mela = new Cerchio(new Punto(x,y), 5);
+		mela = new Cerchio(new Punto(x,y), 5);
 		
 		
-		GC gc = new GC(canvas);
+		gc = new GC(canvas);
 		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		gc.fillOval(x,y, mela.getRaggio(), mela.getRaggio());
@@ -93,17 +111,19 @@ public class snake {
 	}
 	
 	public void serpente(){
-		GC gc = new GC(canvas);
+		gc = new GC(canvas);
 		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
 		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
 		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
 		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
 	}
-    
+
+
+
 	public void collisione(){
 		//Cerchio mela = new Cerchio(new Punto(), 5);
 		boolean ris=false;
-		for(int i=0; i<5; i++){
+		for(int i=0; i<10; i++){
 			System.out.println(mela.getCentro().getX() +"-"+ serpente.getCentro().getX() +"-"+ mela.getCentro().getY() +"-"+serpente.getCentro().getY());
 			
 		if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
@@ -145,7 +165,29 @@ public class snake {
 	    canvas = new Canvas(shlSnake, SWT.NONE);
 		canvas.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		canvas.setBounds(10, 10, 500, 350);
-
+		
+		 canvas.addKeyListener(new KeyAdapter() {
+				
+				@Override
+				public void keyPressed(KeyEvent e) {
+				
+					switch(e.keyCode){
+					case 16777217 :
+						s= 'u';
+					break;
+					case 16777219:
+						s = 'l';
+					break;
+					
+					case 16777218:
+						s = 'd';
+					break;
+					case 16777220:
+						s = 'r';
+					}
+				
+				}
+			});
 		text = new Text(shlSnake, SWT.BORDER);
 		text.setBounds(10, 380, 210, 30);
 
@@ -153,7 +195,7 @@ public class snake {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				GC gc = new GC(canvas);
+				gc = new GC(canvas);
                 serpente();
 				mele();
 			}
@@ -173,7 +215,7 @@ public class snake {
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				GC gc = new GC(canvas);
+				gc = new GC(canvas);
                 elimina();
 				serpente.sposta(0, -10);
 				ec.aggiungi(serpente);
@@ -183,12 +225,13 @@ public class snake {
 		});
 		btnNewButton_1.setBounds(203, 416, 75, 25);
 		btnNewButton_1.setText("^");
-
+		
+       
 		Button btnNewButton_2 = new Button(shlSnake, SWT.NONE);
 		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				GC gc = new GC(canvas);
+				gc = new GC(canvas);
                 elimina();
 				serpente.sposta(0, +10);
 				ec.aggiungi(serpente);
@@ -204,7 +247,7 @@ public class snake {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				GC gc = new GC(canvas);
+				gc = new GC(canvas);
                 elimina();
 				serpente.sposta(-10, 0);
 				ec.aggiungi(serpente);
@@ -219,7 +262,7 @@ public class snake {
 		btnNewButton_4.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				GC gc = new GC(canvas);
+				gc = new GC(canvas);
                 elimina();
 				serpente.sposta(+10, 0);
 				ec.aggiungi(serpente);

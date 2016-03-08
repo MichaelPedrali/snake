@@ -7,7 +7,7 @@ public class Cerchio {
 	private int ALTCANVAS=350;
 
 	public Cerchio() {
-		this.centro = new Punto(BASECANVAS/2, ALTCANVAS/2);
+		this.centro = new Punto(BASECANVAS/2, 170);
 		this.raggio = 10;
 	}
 
