@@ -25,12 +25,16 @@ public class snake {
 	private int BASECANVAS = 500;
 	private int ALTCANVAS = 350;
 	Cerchio serpente = new Cerchio();
+	char c='d';
 	Random ran = new Random();
 	Cerchio mela;
 	ElencoCerchi ec = new ElencoCerchi();
 	char tasto;
 	GC gc;
+	int i = 0;
+	Label label;
 	private char s = 'd';
+	private boolean ris = false;
 
 	/**
 	 * Launch the application.
@@ -45,22 +49,7 @@ public class snake {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shlSnake.open();
-		shlSnake.layout();
-		while (!shlSnake.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}}
 	
-		
 	public void setInterval(int time){
 		try {
 			Thread.sleep(time);
@@ -69,59 +58,16 @@ public class snake {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		spostaSnake('d');
+		muovi(serpente);
 		
-	}
-	
-	public void spostaSnake(char sp){
-		
-	}
-	public void elimina(){
-		gc = new GC(canvas);
-		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-	}
-	
-	public void eliminaMela(){
-		//Cerchio mela = new Cerchio(new Punto(), 5);
-		gc = new GC(canvas);
-		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		gc.fillOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
-		gc.drawOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
-	}
-	public void mele(){
-		
-		
-		int x= ran.nextInt(50)*10;
-		int y= ran.nextInt(35)*10;
-		mela = new Cerchio(new Punto(x,y), 5);
-		
-		
-		gc = new GC(canvas);
-		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		gc.fillOval(x,y, mela.getRaggio(), mela.getRaggio());
-		gc.drawOval(x,y, mela.getRaggio(), mela.getRaggio());
-		
-		System.out.println(x);
-		System.out.println(y);
-	}
-	
-	public void serpente(){
-		gc = new GC(canvas);
-		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
-		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
 	}
 
-
-
+	/**
+	 * Open the window.
+	 */
 	public void collisione(){
 		//Cerchio mela = new Cerchio(new Punto(), 5);
+		
 		boolean ris=false;
 		for(int i=0; i<10; i++){
 			System.out.println(mela.getCentro().getX() +"-"+ serpente.getCentro().getX() +"-"+ mela.getCentro().getY() +"-"+serpente.getCentro().getY());
@@ -150,10 +96,161 @@ public class snake {
 		}
 		}
 		if(ris == true){
+			i = i + 10;
 			eliminaMela();
 			mele();
+			label.setText(i + " ");
 		}
+		
+		
+		
 	}
+	public void muovi(Cerchio serpente){
+		System.out.println(c);
+		switch(c){
+		case 'd':
+            elimina();
+			serpente.sposta(+10, 0);
+			
+            serpente();
+            //collisione();
+            
+			break;
+		case 's':
+
+            elimina();
+			serpente.sposta(-10, 0);
+			
+            serpente();
+            //collisione();
+            System.out.println(c);
+			break;
+		case 'a':
+            elimina();
+			serpente.sposta(0, -10);
+			
+			serpente();
+            //collisione();
+            System.out.println(c);
+			break;
+		case 'b':
+            elimina();
+			serpente.sposta(0, +10);
+			
+			serpente();
+            //collisione();
+            System.out.println(c);
+			break;
+
+		}
+		
+	}
+	public void open() {
+		Display display = Display.getDefault();
+		createContents();
+		shlSnake.open();
+		shlSnake.layout();
+		while (!shlSnake.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				
+				if(ris == true){
+				muovi(serpente);
+				setInterval(80);}
+			}
+		}}
+	
+	
+	
+	public void elimina(){
+		gc = new GC(canvas);
+		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+	}
+	
+	public void eliminaMela(){
+
+		gc = new GC(canvas);
+		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		gc.fillOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
+		gc.drawOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
+	}
+	public void mele(){
+		
+		
+		int x= ran.nextInt(50)*10;
+		int y= ran.nextInt(35)*10;
+		mela = new Cerchio(new Punto(x,y), 5);
+		
+		
+		gc = new GC(canvas);
+		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		gc.fillOval(x,y, mela.getRaggio(), mela.getRaggio());
+		gc.drawOval(x,y, mela.getRaggio(), mela.getRaggio());
+		
+		System.out.println(x);
+		System.out.println(y);
+	}
+	
+	
+	
+	public void serpente(){
+		gc = new GC(canvas);
+		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
+	}
+
+
+
+	/*public void collisione(){
+		//Cerchio mela = new Cerchio(new Punto(), 5);
+		
+		boolean ris=false;
+		for(int i=0; i<10; i++){
+			System.out.println(mela.getCentro().getX() +"-"+ serpente.getCentro().getX() +"-"+ mela.getCentro().getY() +"-"+serpente.getCentro().getY());
+			
+		if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}if (mela.getCentro().getX()+i == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
+		    ris = true;
+		    break;
+		}if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY()+i == serpente.getCentro().getY()){
+		    ris = true;
+		    break;
+		}if( mela.getCentro().getX()-i == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY()-1 == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}if (mela.getCentro().getX()+i == serpente.getCentro().getX() && mela.getCentro().getY()+i == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}if (mela.getCentro().getX()-i == serpente.getCentro().getX() && mela.getCentro().getY()-i == serpente.getCentro().getY()){
+			ris = true;
+			break;
+		}
+		}
+		if(ris == true){
+			i = i + 10;
+			eliminaMela();
+			mele();
+			label.setText(i + " ");
+		}
+		
+		
+		
+	}*/
+	
+
+	
+	
 	/**
 	 * Create contents of the window.
 	 */
@@ -163,31 +260,36 @@ public class snake {
 		shlSnake.setText("SNAKE");
 
 	    canvas = new Canvas(shlSnake, SWT.NONE);
+	    canvas.addKeyListener(new org.eclipse.swt.events.KeyAdapter() {
+	    	
+	    	
+	    @Override
+	    	public void keyPressed(org.eclipse.swt.events.KeyEvent e) {
+	    		switch(e.keyCode){
+				case 16777217 :
+					c= 'a';
+					System.out.println(c);
+				break;
+				case 16777219:
+					c = 's';
+					System.out.println(c);
+				break;
+				
+				case 16777218:
+					c = 'b';
+					System.out.println(c);
+				break;
+				case 16777220:
+					c = 'd';
+					System.out.println(c);
+				}
+	    	}
+	    });
 		canvas.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		canvas.setBounds(10, 10, 500, 350);
+	
 		
-		 canvas.addKeyListener(new KeyAdapter() {
-				
-				@Override
-				public void keyPressed(KeyEvent e) {
-				
-					switch(e.keyCode){
-					case 16777217 :
-						s= 'u';
-					break;
-					case 16777219:
-						s = 'l';
-					break;
-					
-					case 16777218:
-						s = 'd';
-					break;
-					case 16777220:
-						s = 'r';
-					}
-				
-				}
-			});
+	
 		text = new Text(shlSnake, SWT.BORDER);
 		text.setBounds(10, 380, 210, 30);
 
@@ -195,9 +297,13 @@ public class snake {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				gc = new GC(canvas);
+
+				//gc = new GC(canvas);
                 serpente();
 				mele();
+				ris = true;
+				//muovi(c);
+				
 			}
 		});
 		btnNewButton.setBounds(226, 380, 170, 30);
@@ -207,9 +313,8 @@ public class snake {
 		lblScore.setBounds(413, 383, 49, 25);
 		lblScore.setText("SCORE:");
 
-		Label label = new Label(shlSnake, SWT.NONE);
+		label = new Label(shlSnake, SWT.NONE);
 		label.setBounds(457, 383, 45, 22);
-		label.setText("0");
 
 		Button btnNewButton_1 = new Button(shlSnake, SWT.NONE);
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
@@ -274,5 +379,7 @@ public class snake {
 		btnNewButton_4.setBounds(294, 435, 75, 25);
 		btnNewButton_4.setText(">");
 
-	}
+	
 }
+}
+
