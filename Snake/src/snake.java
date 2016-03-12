@@ -52,7 +52,7 @@ public class snake {
 	
 	public void setInterval(int time){
 		try {
-			Thread.sleep(time);
+			Thread.sleep(100);
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -101,18 +101,16 @@ public class snake {
 			mele();
 			label.setText(i + " ");
 		}
-		
-		
-		
 	}
+	
 	public void muovi(Cerchio serpente){
 		System.out.println(c);
 		switch(c){
 		case 'd':
             elimina();
 			serpente.sposta(+10, 0);
-			
             serpente();
+            
             //collisione();
             
 			break;
@@ -120,8 +118,8 @@ public class snake {
 
             elimina();
 			serpente.sposta(-10, 0);
+			serpente();
 			
-            serpente();
             //collisione();
             System.out.println(c);
 			break;
@@ -145,6 +143,7 @@ public class snake {
 		}
 		
 	}
+	
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
@@ -155,7 +154,8 @@ public class snake {
 				
 				if(ris == true){
 				muovi(serpente);
-				setInterval(80);}
+				setInterval(80);
+				}
 			}
 		}}
 	
@@ -298,9 +298,8 @@ public class snake {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				//gc = new GC(canvas);
-                serpente();
-				mele();
+                //serpente();
+				//mele();
 				ris = true;
 				//muovi(c);
 				
