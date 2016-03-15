@@ -25,15 +25,12 @@ public class snake {
 	private int BASECANVAS = 500;
 	private int ALTCANVAS = 350;
 	Cerchio serpente = new Cerchio();
-	char c='d';
+	char c = 'd';
 	Random ran = new Random();
 	Cerchio mela;
-	ElencoCerchi ec = new ElencoCerchi();
-	char tasto;
 	GC gc;
 	int i = 0;
 	Label label;
-	private char s = 'd';
 	private boolean ris = false;
 
 	/**
@@ -41,6 +38,7 @@ public class snake {
 	 * 
 	 * @param args
 	 */
+	
 	public static void main(String[] args) {
 		try {
 			snake window = new snake();
@@ -52,21 +50,92 @@ public class snake {
 	
 	public void setInterval(int time){
 		try {
-			Thread.sleep(100);
+			Thread.sleep(time);
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		muovi(serpente);
-		
+		muovi(serpente);	
 	}
 
 	/**
 	 * Open the window.
 	 */
+
+	
+	public void muovi(Cerchio serpente){
+		System.out.println(c);
+		switch(c){
+		case 'd':
+            elimina();
+			serpente.sposta(+10, 0);
+            serpente();
+            if(serpente.getCentro().getX()>475){
+            	elimina();
+            	elimina();
+            	serpente.setCentro(new Punto(10,serpente.getCentro().getY()));
+    			serpente.sposta(+10, 0);
+            }
+            //collisione();         
+			break;
+			
+		case 's':
+            elimina();
+			serpente.sposta(-10, 0);
+			serpente();
+			if(serpente.getCentro().getX()<5){
+            	elimina();
+            	elimina();
+            	serpente.setCentro(new Punto(475,serpente.getCentro().getY()));
+    			serpente.sposta(+10, 0);
+            }
+            //collisione();
+			break;
+			
+		case 'a':
+            elimina();
+			serpente.sposta(0, -10);
+			serpente();
+			if(serpente.getCentro().getY()<5){
+            	elimina();
+            	elimina();
+            	serpente.setCentro(new Punto(serpente.getCentro().getX(),340));
+    			serpente.sposta(0, -10);
+            }
+            //collisione();       
+			break;
+			
+		case 'b':
+            elimina();
+			serpente.sposta(0, +10);
+			serpente();
+			if(serpente.getCentro().getY()>340){
+            	elimina();
+            	elimina();
+            	serpente.setCentro(new Punto(serpente.getCentro().getX(),5));
+    			serpente.sposta(0, +10);
+            }
+            //collisione();            
+			break;
+		}	
+	}
+	
+	public void open() {
+		Display display = Display.getDefault();
+		createContents();
+		shlSnake.open();
+		shlSnake.layout();
+		while (!shlSnake.isDisposed()) {
+			if (!display.readAndDispatch()) {	
+				if(ris == true){
+				setInterval(80);
+				}
+			}
+		}}
+	
+	
 	public void collisione(){
-		//Cerchio mela = new Cerchio(new Punto(), 5);
 		
 		boolean ris=false;
 		for(int i=0; i<10; i++){
@@ -102,64 +171,6 @@ public class snake {
 			label.setText(i + " ");
 		}
 	}
-	
-	public void muovi(Cerchio serpente){
-		System.out.println(c);
-		switch(c){
-		case 'd':
-            elimina();
-			serpente.sposta(+10, 0);
-            serpente();
-            
-            //collisione();
-            
-			break;
-		case 's':
-
-            elimina();
-			serpente.sposta(-10, 0);
-			serpente();
-			
-            //collisione();
-            System.out.println(c);
-			break;
-		case 'a':
-            elimina();
-			serpente.sposta(0, -10);
-			
-			serpente();
-            //collisione();
-            System.out.println(c);
-			break;
-		case 'b':
-            elimina();
-			serpente.sposta(0, +10);
-			
-			serpente();
-            //collisione();
-            System.out.println(c);
-			break;
-
-		}
-		
-	}
-	
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shlSnake.open();
-		shlSnake.layout();
-		while (!shlSnake.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				
-				if(ris == true){
-				muovi(serpente);
-				setInterval(80);
-				}
-			}
-		}}
-	
-	
 	
 	public void elimina(){
 		gc = new GC(canvas);
@@ -170,32 +181,23 @@ public class snake {
 	}
 	
 	public void eliminaMela(){
-
 		gc = new GC(canvas);
 		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		gc.fillOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
 		gc.drawOval(mela.getCentro().getX(), mela.getCentro().getY(), mela.getRaggio(), mela.getRaggio());
 	}
+	
 	public void mele(){
-		
-		
 		int x= ran.nextInt(50)*10;
 		int y= ran.nextInt(35)*10;
 		mela = new Cerchio(new Punto(x,y), 5);
-		
-		
 		gc = new GC(canvas);
 		gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		gc.fillOval(x,y, mela.getRaggio(), mela.getRaggio());
 		gc.drawOval(x,y, mela.getRaggio(), mela.getRaggio());
-		
-		System.out.println(x);
-		System.out.println(y);
 	}
-	
-	
 	
 	public void serpente(){
 		gc = new GC(canvas);
@@ -204,52 +206,6 @@ public class snake {
 		gc.fillOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
 		gc.drawOval(serpente.getCentro().getX(), serpente.getCentro().getY(), serpente.getRaggio(), serpente.getRaggio());
 	}
-
-
-
-	/*public void collisione(){
-		//Cerchio mela = new Cerchio(new Punto(), 5);
-		
-		boolean ris=false;
-		for(int i=0; i<10; i++){
-			System.out.println(mela.getCentro().getX() +"-"+ serpente.getCentro().getX() +"-"+ mela.getCentro().getY() +"-"+serpente.getCentro().getY());
-			
-		if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
-			ris = true;
-			break;
-		}if (mela.getCentro().getX()+i == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
-		    ris = true;
-		    break;
-		}if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY()+i == serpente.getCentro().getY()){
-		    ris = true;
-		    break;
-		}if( mela.getCentro().getX()-i == serpente.getCentro().getX() && mela.getCentro().getY() == serpente.getCentro().getY()){
-			ris = true;
-			break;
-		}if (mela.getCentro().getX() == serpente.getCentro().getX() && mela.getCentro().getY()-1 == serpente.getCentro().getY()){
-			ris = true;
-			break;
-		}if (mela.getCentro().getX()+i == serpente.getCentro().getX() && mela.getCentro().getY()+i == serpente.getCentro().getY()){
-			ris = true;
-			break;
-		}if (mela.getCentro().getX()-i == serpente.getCentro().getX() && mela.getCentro().getY()-i == serpente.getCentro().getY()){
-			ris = true;
-			break;
-		}
-		}
-		if(ris == true){
-			i = i + 10;
-			eliminaMela();
-			mele();
-			label.setText(i + " ");
-		}
-		
-		
-		
-	}*/
-	
-
-	
 	
 	/**
 	 * Create contents of the window.
@@ -314,7 +270,10 @@ public class snake {
 
 		label = new Label(shlSnake, SWT.NONE);
 		label.setBounds(457, 383, 45, 22);
+        
 
+	    
+	    
 		Button btnNewButton_1 = new Button(shlSnake, SWT.NONE);
 		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -322,7 +281,7 @@ public class snake {
 				gc = new GC(canvas);
                 elimina();
 				serpente.sposta(0, -10);
-				ec.aggiungi(serpente);
+			
 				serpente();
                 collisione();
 			}
@@ -338,7 +297,7 @@ public class snake {
 				gc = new GC(canvas);
                 elimina();
 				serpente.sposta(0, +10);
-				ec.aggiungi(serpente);
+			
                 serpente();
                 collisione();
 			}
@@ -354,7 +313,7 @@ public class snake {
 				gc = new GC(canvas);
                 elimina();
 				serpente.sposta(-10, 0);
-				ec.aggiungi(serpente);
+			
                 serpente();
                 collisione();
 			}
@@ -369,7 +328,7 @@ public class snake {
 				gc = new GC(canvas);
                 elimina();
 				serpente.sposta(+10, 0);
-				ec.aggiungi(serpente);
+		
                 serpente();
                 collisione();
 
@@ -381,4 +340,3 @@ public class snake {
 	
 }
 }
-
