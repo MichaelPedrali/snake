@@ -5,6 +5,11 @@ import org.eclipse.swt.widgets.Button;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 
 import org.eclipse.swt.SWT;
@@ -17,7 +22,9 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.GC;
 
-public class snake {
+
+
+public class snake implements java.io.Serializable{
 
 	protected Shell shlSnake;
 	private Text text;
@@ -71,13 +78,13 @@ public class snake {
             elimina();
 			serpente.sposta(+10, 0);
             serpente();
-            if(serpente.getCentro().getX()>475){
-            	elimina();
+            if(serpente.getCentro().getX()>480){
+            	
             	elimina();
             	serpente.setCentro(new Punto(10,serpente.getCentro().getY()));
     			serpente.sposta(+10, 0);
             }
-            //collisione();         
+            collisione();         
 			break;
 			
 		case 's':
@@ -85,12 +92,12 @@ public class snake {
 			serpente.sposta(-10, 0);
 			serpente();
 			if(serpente.getCentro().getX()<5){
-            	elimina();
+            	
             	elimina();
             	serpente.setCentro(new Punto(475,serpente.getCentro().getY()));
     			serpente.sposta(+10, 0);
             }
-            //collisione();
+            collisione();
 			break;
 			
 		case 'a':
@@ -98,25 +105,25 @@ public class snake {
 			serpente.sposta(0, -10);
 			serpente();
 			if(serpente.getCentro().getY()<5){
-            	elimina();
+            	
             	elimina();
             	serpente.setCentro(new Punto(serpente.getCentro().getX(),340));
     			serpente.sposta(0, -10);
             }
-            //collisione();       
+            collisione();       
 			break;
 			
 		case 'b':
             elimina();
 			serpente.sposta(0, +10);
 			serpente();
-			if(serpente.getCentro().getY()>340){
-            	elimina();
+			if(serpente.getCentro().getY()>345){
+            	
             	elimina();
             	serpente.setCentro(new Punto(serpente.getCentro().getX(),5));
     			serpente.sposta(0, +10);
             }
-            //collisione();            
+            collisione();            
 			break;
 		}	
 	}
@@ -168,7 +175,7 @@ public class snake {
 			i = i + 10;
 			eliminaMela();
 			mele();
-			label.setText(i + " ");
+			label.setText(i + "");
 		}
 	}
 	
@@ -212,7 +219,7 @@ public class snake {
 	 */
 	protected void createContents() {
 		shlSnake = new Shell();
-		shlSnake.setSize(536, 529);
+		shlSnake.setSize(536, 487);
 		shlSnake.setText("SNAKE");
 
 	    canvas = new Canvas(shlSnake, SWT.NONE);
@@ -247,7 +254,7 @@ public class snake {
 		
 	
 		text = new Text(shlSnake, SWT.BORDER);
-		text.setBounds(10, 380, 210, 30);
+		text.setBounds(10, 366, 210, 30);
 
 		Button btnNewButton = new Button(shlSnake, SWT.NONE);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
@@ -255,87 +262,50 @@ public class snake {
 			public void widgetSelected(SelectionEvent e) {
 
                 //serpente();
-				//mele();
+				mele();
 				ris = true;
 				//muovi(c);
 				
 			}
 		});
-		btnNewButton.setBounds(226, 380, 170, 30);
+		btnNewButton.setBounds(226, 366, 170, 30);
 		btnNewButton.setText("START");
 
 		Label lblScore = new Label(shlSnake, SWT.NONE);
-		lblScore.setBounds(413, 383, 49, 25);
+		lblScore.setBounds(436, 366, 49, 15);
 		lblScore.setText("SCORE:");
 
 		label = new Label(shlSnake, SWT.NONE);
-		label.setBounds(457, 383, 45, 22);
-        
-
-	    
-	    
-		Button btnNewButton_1 = new Button(shlSnake, SWT.NONE);
-		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				gc = new GC(canvas);
-                elimina();
-				serpente.sposta(0, -10);
-			
-				serpente();
-                collisione();
-			}
-		});
-		btnNewButton_1.setBounds(203, 416, 75, 25);
-		btnNewButton_1.setText("^");
+		label.setBounds(436, 385, 45, 30);
 		
-       
-		Button btnNewButton_2 = new Button(shlSnake, SWT.NONE);
-		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
+		Button btnSave = new Button(shlSnake, SWT.NONE);
+		btnSave.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				gc = new GC(canvas);
-                elimina();
-				serpente.sposta(0, +10);
-			
-                serpente();
-                collisione();
+				try {
+					ris=false;
+					ObjectOutputStream stream= new ObjectOutputStream(new FileOutputStream("record.txt"));
+					stream.writeObject(i);
+					stream.close();
+					
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
 			}
 		});
-		btnNewButton_2.setBounds(203, 456, 75, 25);
-		btnNewButton_2.setText("v");
-
-		Button btnNewButton_3 = new Button(shlSnake, SWT.NONE);
-		btnNewButton_3.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-				gc = new GC(canvas);
-                elimina();
-				serpente.sposta(-10, 0);
-			
-                serpente();
-                collisione();
-			}
-		});
-		btnNewButton_3.setBounds(111, 435, 75, 25);
-		btnNewButton_3.setText("<");
-
-		Button btnNewButton_4 = new Button(shlSnake, SWT.NONE);
-		btnNewButton_4.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				gc = new GC(canvas);
-                elimina();
-				serpente.sposta(+10, 0);
+		btnSave.setBounds(10, 407, 210, 30);
+		btnSave.setText("SAVE");
 		
-                serpente();
-                collisione();
-
-			}
-		});
-		btnNewButton_4.setBounds(294, 435, 75, 25);
-		btnNewButton_4.setText(">");
+		Button btnLoad = new Button(shlSnake, SWT.NONE);
+		btnLoad.setBounds(226, 407, 170, 30);
+		btnLoad.setText("LOAD");
 
 	
 }
